@@ -6,6 +6,7 @@ import StyledButton from '../components/StyledButton';
 import TextArea from '../components/TextArea';
 import { generateStory } from '../services/openRouterService';
 import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
 
 const PageContainer = styled.div`
   max-width: 1200px;
@@ -149,6 +150,26 @@ const ErrorMessage = styled(motion.div)`
   margin-bottom: 1rem;
 `;
 
+const ApiKeyAlert = styled(motion.div)`
+  background-color: rgba(100, 255, 218, 0.1);
+  border-left: 4px solid ${props => props.darkMode ? '#64ffda' : '#6c5ce7'};
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 0 8px 8px 0;
+  text-align: center;
+`;
+
+const AlertTitle = styled.h3`
+  color: ${props => props.darkMode ? '#64ffda' : '#6c5ce7'};
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+`;
+
+const AlertButton = styled(StyledButton)`
+  margin-top: 1rem;
+`;
+
 const HomePage = () => {
   const { apiKey, systemInstructions, darkMode, selectedModel } = useAppContext();
   const [prompt, setPrompt] = useState('');
@@ -236,11 +257,29 @@ const HomePage = () => {
         </Subtitle>
       </Hero>
       
+      {!apiKey && (
+        <ApiKeyAlert 
+          darkMode={darkMode}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <AlertTitle darkMode={darkMode}>OpenRouter API Key Required</AlertTitle>
+          <p>To generate stories, you need to provide your OpenRouter API key in the settings.</p>
+          <p>You can get a free API key by signing up at <a href="https://openrouter.ai" target="_blank" rel="noopener noreferrer" style={{ color: darkMode ? '#64ffda' : '#6c5ce7' }}>OpenRouter.ai</a></p>
+          <Link to="/settings" style={{ textDecoration: 'none' }}>
+            <AlertButton>
+              Go to Settings
+            </AlertButton>
+          </Link>
+        </ApiKeyAlert>
+      )}
+      
       <FormContainer 
         darkMode={darkMode}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        transition={{ duration: 0.5, delay: !apiKey ? 0.3 : 0.2 }}
       >
         <AnimatePresence>
           {error && (

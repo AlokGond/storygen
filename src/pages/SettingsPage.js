@@ -62,6 +62,35 @@ const LinkText = styled.a`
   }
 `;
 
+const StepContainer = styled.div`
+  margin-bottom: 2rem;
+`;
+
+const StepNumber = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: ${props => props.darkMode ? '#64ffda' : '#6c5ce7'};
+  color: ${props => props.darkMode ? '#1e1e30' : 'white'};
+  font-weight: bold;
+  margin-right: 0.75rem;
+`;
+
+const StepTitle = styled.h4`
+  display: inline;
+  color: ${props => props.darkMode ? '#e1e1e6' : '#333'};
+  margin: 0;
+`;
+
+const StepContent = styled.div`
+  margin-left: 2.5rem;
+  margin-top: 0.75rem;
+  color: ${props => props.darkMode ? '#b3b3cc' : '#666'};
+`;
+
 const SettingsPage = () => {
   const { 
     apiKey, 
@@ -129,25 +158,49 @@ const SettingsPage = () => {
         <SectionTitle darkMode={darkMode}>API Configuration</SectionTitle>
         
         <InfoBox darkMode={darkMode}>
-          <p>You need an OpenRouter API key to use this application. If you don't have one already, you can sign up at <LinkText href="https://openrouter.ai" target="_blank" rel="noopener noreferrer" darkMode={darkMode}>OpenRouter.ai</LinkText>.</p>
+          <p><strong>Important:</strong> This application requires an OpenRouter API key to generate stories. The API key is stored only in your browser's local storage and is never sent to our servers.</p>
         </InfoBox>
         
-        <Input
-          id="apiKey"
-          name="apiKey"
-          label="OpenRouter API Key"
-          type="password"
-          value={formState.apiKey}
-          onChange={handleInputChange}
-          placeholder="Enter your OpenRouter API key"
-          icon={
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21 2L19 4M9 4L11 2M12 12L2.5 21.5M2.5 12.5L5 10M15.5 22L12 12M16 10L12 12M12 12L14 8L19 3" 
-                    stroke={darkMode ? "#64ffda" : "#6c5ce7"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          }
-          helperText="Your API key is stored locally in your browser."
-        />
+        <StepContainer>
+          <StepNumber darkMode={darkMode}>1</StepNumber>
+          <StepTitle darkMode={darkMode}>Get an OpenRouter API Key</StepTitle>
+          <StepContent darkMode={darkMode}>
+            <p>Visit <LinkText href="https://openrouter.ai" target="_blank" rel="noopener noreferrer" darkMode={darkMode}>OpenRouter.ai</LinkText> and create an account.</p>
+            <p>Once registered, go to your dashboard and create a new API key.</p>
+          </StepContent>
+        </StepContainer>
+        
+        <StepContainer>
+          <StepNumber darkMode={darkMode}>2</StepNumber>
+          <StepTitle darkMode={darkMode}>Enter Your API Key Below</StepTitle>
+          <StepContent darkMode={darkMode}>
+            <Input
+              id="apiKey"
+              name="apiKey"
+              label="OpenRouter API Key"
+              type="password"
+              value={formState.apiKey}
+              onChange={handleInputChange}
+              placeholder="Enter your OpenRouter API key (starts with sk-or-...)"
+              icon={
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 2L19 4M9 4L11 2M12 12L2.5 21.5M2.5 12.5L5 10M15.5 22L12 12M16 10L12 12M12 12L14 8L19 3" 
+                        stroke={darkMode ? "#64ffda" : "#6c5ce7"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              }
+              helperText="Your API key is stored locally in your browser and never sent to our servers."
+            />
+          </StepContent>
+        </StepContainer>
+        
+        <StepContainer>
+          <StepNumber darkMode={darkMode}>3</StepNumber>
+          <StepTitle darkMode={darkMode}>Save Your Settings</StepTitle>
+          <StepContent darkMode={darkMode}>
+            <p>Click the "Save Settings" button below to store your API key.</p>
+            <p>After saving, return to the Home page to start generating stories.</p>
+          </StepContent>
+        </StepContainer>
         
         <Input
           id="selectedModel"

@@ -8,8 +8,8 @@ export const useAppContext = () => useContext(AppContext);
 
 // Provider component
 export const AppProvider = ({ children }) => {
-  // State for the API key
-  const [apiKey, setApiKey] = useState(localStorage.getItem('openRouterApiKey') || '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');
+  // State for the API key - no default key provided, users must enter their own
+  const [apiKey, setApiKey] = useState(localStorage.getItem('openRouterApiKey') || '');
   
   // State for system instructions
   const [systemInstructions, setSystemInstructions] = useState(
