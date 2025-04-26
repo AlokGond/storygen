@@ -22,7 +22,9 @@ export const generateStory = async (userMessage, apiKey, onProgress, model = "de
     // Create OpenRouter API client
     const client = createClient(apiKey);
 
-    const systemMessage = `You are an expert Hindi storyteller. Create a story in Hindi with Devanagari script.`;
+    const systemMessage = `You are an expert Hindi storyteller. Create a story in Hindi with Devanagari script.
+    
+${formattingInstructions}`;
 
     const messages = [
       { role: "system", content: systemMessage },
