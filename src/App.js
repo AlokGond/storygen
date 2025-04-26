@@ -28,6 +28,18 @@ const Footer = styled.footer`
   font-size: 0.9rem;
 `;
 
+const HeartIcon = styled.span`
+  color: ${props => props.darkMode ? '#ff6b6b' : '#ff6b6b'};
+  display: inline-block;
+  margin: 0 0.25rem;
+  animation: heartbeat 1.5s infinite;
+  
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+`;
+
 const AppContent = () => {
   const { darkMode } = useAppContext();
   
@@ -43,7 +55,7 @@ const AppContent = () => {
       </Main>
       <Footer darkMode={darkMode}>
         <p>© {new Date().getFullYear()} StoryGen AI - All rights reserved</p>
-        <p>Powered by <a href="https://openrouter.ai" target="_blank" rel="noopener noreferrer" style={{ color: darkMode ? '#64ffda' : '#6c5ce7', textDecoration: 'none' }}>OpenRouter.ai</a></p>
+        <p>Made With <HeartIcon darkMode={darkMode}>❤️</HeartIcon> Bittu</p>
       </Footer>
     </AppContainer>
   );
