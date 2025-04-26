@@ -174,6 +174,50 @@ const AboutPage = () => {
         </Paragraph>
       </Section>
       
+      <Section 
+        darkMode={darkMode}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+      >
+        <SectionTitle darkMode={darkMode}>Security Considerations</SectionTitle>
+        <Paragraph darkMode={darkMode}>
+          <strong>Browser-Based Implementation:</strong> StoryGen AI is a client-side application that runs entirely in your web browser. 
+          This means your API key is stored in your browser's local storage and API calls are made directly from your device.
+        </Paragraph>
+        <Paragraph darkMode={darkMode}>
+          <strong>Security Implications:</strong> While convenient, this approach has certain security implications:
+        </Paragraph>
+        <FeatureList>
+          <FeatureItem darkMode={darkMode}>
+            Your API key is stored in your browser's local storage, which could potentially be accessed by malicious extensions or scripts.
+          </FeatureItem>
+          <FeatureItem darkMode={darkMode}>
+            API calls are made directly from your browser to OpenRouter's servers, which might expose your requests in network logs.
+          </FeatureItem>
+          <FeatureItem darkMode={darkMode}>
+            This is less secure than using a backend service to proxy requests and securely store API keys.
+          </FeatureItem>
+        </FeatureList>
+        <Paragraph darkMode={darkMode}>
+          <strong>Best Practices:</strong> To use this application safely:
+        </Paragraph>
+        <FeatureList>
+          <FeatureItem darkMode={darkMode}>
+            Only use StoryGen AI on trusted, private devices and networks.
+          </FeatureItem>
+          <FeatureItem darkMode={darkMode}>
+            Do not share access to a browser where you've stored your API key.
+          </FeatureItem>
+          <FeatureItem darkMode={darkMode}>
+            Consider using a dedicated API key with usage limits for this application.
+          </FeatureItem>
+          <FeatureItem darkMode={darkMode}>
+            For higher security, consider hosting your own version with a backend service to proxy API requests.
+          </FeatureItem>
+        </FeatureList>
+      </Section>
+      
       <CTAContainer>
         <CTAText darkMode={darkMode}>Ready to create your first AI-generated story?</CTAText>
         <Link to="/" style={{ textDecoration: 'none' }}>

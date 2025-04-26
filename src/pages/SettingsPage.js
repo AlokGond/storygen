@@ -52,6 +52,15 @@ const InfoBox = styled.div`
   color: ${props => props.darkMode ? '#e1e1e6' : '#333'};
 `;
 
+const SecurityBox = styled.div`
+  background: rgba(255, 107, 107, 0.1);
+  border-left: 4px solid #ff6b6b;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0 8px 8px 0;
+  color: ${props => props.darkMode ? '#e1e1e6' : '#333'};
+`;
+
 const LinkText = styled.a`
   color: ${props => props.darkMode ? '#64ffda' : '#6c5ce7'};
   text-decoration: none;
@@ -161,6 +170,17 @@ const SettingsPage = () => {
           <p><strong>Important:</strong> This application requires an OpenRouter API key to generate stories. The API key is stored only in your browser's local storage and is never sent to our servers.</p>
         </InfoBox>
         
+        <SecurityBox darkMode={darkMode}>
+          <p><strong>Security Warning:</strong> This application makes API calls directly from your browser to OpenRouter's servers using your API key. This approach is less secure than using a backend service.</p>
+          <p>Please be aware of these risks:</p>
+          <ul style={{ marginLeft: '1rem', marginTop: '0.5rem' }}>
+            <li>Your API key is stored in your browser's local storage</li>
+            <li>Browser extensions or other scripts could potentially access your API key</li>
+            <li>Only use this application on trusted, private networks and devices</li>
+          </ul>
+          <p style={{ marginTop: '0.5rem' }}><strong>For higher security:</strong> Consider using a dedicated backend service that can securely store your API key and proxy requests to OpenRouter.</p>
+        </SecurityBox>
+        
         <StepContainer>
           <StepNumber darkMode={darkMode}>1</StepNumber>
           <StepTitle darkMode={darkMode}>Get an OpenRouter API Key</StepTitle>
@@ -217,7 +237,7 @@ const SettingsPage = () => {
                     stroke={darkMode ? "#64ffda" : "#6c5ce7"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           }
-          helperText="The AI model to use for story generation. Default is 'deepseek/deepseek-r1:free'."
+          helperText="The AI model to use for story generation. Default is 'google/gemini-2.5-pro-exp-03-25'."
         />
         
         <TextArea
