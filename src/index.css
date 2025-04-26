@@ -1,13 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa;
+  color: #333;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #e1e1e6;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background-color: #6c5ce740;
+  color: #333;
+}
+
+body.dark-mode ::selection {
+  background-color: #64ffda40;
+  color: #e1e1e6;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #1e1e30;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c4c4c4;
+  border-radius: 5px;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+  background: #2a2a42;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: #3a3a52;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(108, 92, 231, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(108, 92, 231, 0);
+  }
+}
+
+body.dark-mode .pulse {
+  animation: darkPulse 2s infinite;
+}
+
+@keyframes darkPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(100, 255, 218, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(100, 255, 218, 0);
+  }
+}
+
+/* Container for all pages to maintain consistency */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
