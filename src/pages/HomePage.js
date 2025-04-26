@@ -140,15 +140,6 @@ const StoryTitle = styled.h3`
   margin: 0;
 `;
 
-const LoaderContainer = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  color: ${props => props.darkMode ? '#e1e1e6' : '#333'};
-`;
-
 const ErrorMessage = styled(motion.div)`
   background-color: #ff6b6b20;
   color: #ff6b6b;
@@ -192,8 +183,6 @@ const HomePage = () => {
     setIsStreaming(true);
     
     try {
-      // Create an empty story container immediately
-      const storyContainer = document.createElement('div');
       storyContainerRef.current?.scrollIntoView({ behavior: 'smooth' });
       
       // Use the streaming API with a callback function
