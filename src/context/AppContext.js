@@ -44,9 +44,9 @@ Formatting Requirements:
 You are not just writing — you are crafting a beautiful, mind-blowing experience through Hindi storytelling with professional presentation.`
   );
   
-  // State for selected model
+  // State for selected model - updated to a known working model
   const [selectedModel, setSelectedModel] = useState(
-    localStorage.getItem('selectedModel') || 'deepseek/deepseek-chat'
+    localStorage.getItem('selectedModel') || 'openai/gpt-3.5-turbo'
   );
 
   // State for theme

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '../context/AppContext';
 import StyledButton from '../components/StyledButton';
 import TextArea from '../components/TextArea';
-import { generateStory } from '../services/openRouterService';
+import { generateStory, testApiKey } from '../services/openRouterService';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
 
@@ -177,7 +177,38 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
+  const [isApiKeyValid, setIsApiKeyValid] = useState(true);
   const storyContainerRef = useRef(null);
+  
+  // Test API key when component mounts or when apiKey changes
+  useEffect(() => {
+    const validateApiKey = async () => {
+      if (!apiKey) {
+        setIsApiKeyValid(false);
+        return;
+      }
+      
+      try {
+        console.log("Testing API key on component mount...");
+        const result = await testApiKey(apiKey);
+        setIsApiKeyValid(result.valid);
+        
+        if (!result.valid) {
+          setError(`API key error: ${result.error}`);
+          console.error("API key validation failed:", result.error);
+        } else {
+          setError('');
+          console.log("API key is valid");
+        }
+      } catch (err) {
+        console.error("Error validating API key:", err);
+        setIsApiKeyValid(false);
+        setError("Failed to validate API key. Please try again or enter a new key.");
+      }
+    };
+    
+    validateApiKey();
+  }, [apiKey]);
   
   // Scroll to the bottom of the story container when new content is added during streaming
   useEffect(() => {
@@ -198,6 +229,11 @@ const HomePage = () => {
       return;
     }
     
+    if (!isApiKeyValid) {
+      setError('The API key appears to be invalid. Please check your API key in the Settings page.');
+      return;
+    }
+    
     setLoading(true);
     setError('');
     setStory('');
@@ -206,6 +242,7 @@ const HomePage = () => {
     try {
       storyContainerRef.current?.scrollIntoView({ behavior: 'smooth' });
       
+      console.log("Starting story generation with", selectedModel);
       // Use the streaming API with a callback function
       const result = await generateStory(
         apiKey, 
@@ -219,10 +256,23 @@ const HomePage = () => {
       );
       
       if (!result.success) {
-        setError(result.error || 'Failed to generate story. Please try again.');
+        console.error("Story generation failed:", result);
+        let errorMsg = result.error || 'Failed to generate story. Please try again.';
+        
+        // Provide more specific error messages
+        if (result.statusCode === 401) {
+          errorMsg = 'Authentication failed. Your API key may be invalid or expired.';
+          setIsApiKeyValid(false);
+        } else if (result.statusCode === 429) {
+          errorMsg = 'Rate limit exceeded. Please try again in a few moments.';
+        } else if (result.statusCode >= 500) {
+          errorMsg = 'OpenRouter service error. Please try again later.';
+        }
+        
+        setError(errorMsg);
       }
     } catch (err) {
-      console.error('Error generating story:', err);
+      console.error("Error generating story:", err);
       setError('An unexpected error occurred. Please try again.');
     } finally {
       setLoading(false);
